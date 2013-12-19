@@ -3,6 +3,28 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig(
     {
+      "browserDependencies": {
+        "options": {},
+          "jquery": {
+            "dir": "vendor/js/lib/jquery",
+              "files": [
+               {
+                  "jquery-1.10.2.js": "http://code.jquery.com/jquery-1.10.2.js"
+                },
+                {
+                   "jquery-2.0.3.js": "http://code.jquery.com/jquery-2.0.3.js"
+                 }
+              ]
+              },
+          "modernizr": {
+            "dir": "vendor/js/lib/modernizr",
+              "files": [
+               {
+                  "modernizr-2.6.2.js": "https://raw.github.com/Modernizr/Modernizr/v2.6.2/modernizr.js"
+               }
+             ]
+           }
+      },
       cssmin: {
         combine: {
           files: {
@@ -46,7 +68,8 @@ module.exports = function(grunt) {
       concat: {
         dist: {
           src: [
-           'libs/modules/modernizr/modernizr.dev.2.0.6.js', 
+           'vendor/js/lib/modernizr/modernizr-2.6.2.js',
+           'vendor/js/lib/jquery/jquery-1.10.2.js',
            'libs/modules/960-Responsive-Grid/js/adapt.js', 
            'libs/modules/prefixFree/prefixFree.js', 
            'libs/modules/jQuery/jquery-1.7.1.min.js',
@@ -74,13 +97,14 @@ module.exports = function(grunt) {
   );
 
   // loadNpmTasks
+  grunt.loadNpmTasks('grunt-browser-dependencies');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   
   // default Task is dita-d4p-classic
-  grunt.registerTask('default', ['cssmin', 'concat', 'uglify', 'jshint']);
+  grunt.registerTask('default', ['browserDependencies', 'cssmin', 'concat', 'uglify', 'jshint']);
 
 };
 
